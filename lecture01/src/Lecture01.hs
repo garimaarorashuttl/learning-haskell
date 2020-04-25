@@ -17,7 +17,7 @@ module Lecture01 where
 -- λ> problem1 ['x','y','z']
 -- 'z'
 problem1 :: [a] -> a
-problem1 = undefined
+problem1 x = last x
 
 
 -- Problem 2
@@ -27,7 +27,7 @@ problem1 = undefined
 -- λ> problem2 ['a'..'z']
 -- 'y'
 problem2 :: [a] -> a
-problem2 = undefined
+problem2 x = last (init x)
 
 
 -- Problem 3
@@ -38,7 +38,7 @@ problem2 = undefined
 -- λ> problem3 "haskell" 5
 -- 'e'
 problem3 :: [a] -> Int -> a
-problem3 = undefined
+problem3 inputList position = inputList !! (position - 1)
 
 
 -- Problem 4
@@ -49,7 +49,7 @@ problem3 = undefined
 -- λ> problem4 "Hello, world!"
 -- 13
 problem4 :: [a] -> Int
-problem4 = undefined
+problem4 x = length x
 
 
 -- Problem 5
@@ -60,7 +60,7 @@ problem4 = undefined
 -- λ> problem5 [1,2,3,4]
 -- [4,3,2,1]
 problem5 :: [a] -> [a]
-problem5 = undefined
+problem5 x = reverse x
 
 
 -- Problem 6
@@ -74,7 +74,7 @@ problem5 = undefined
 -- λ> problem6 [1,2,4,8,16,8,4,2,1]
 -- True
 problem6 :: Eq a => [a] -> Bool
-problem6 = undefined
+problem6 x = if x == reverse x then True else False
 
 
 -- Problem 7
