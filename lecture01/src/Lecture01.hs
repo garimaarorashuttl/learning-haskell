@@ -84,9 +84,7 @@ problem6 x = if x == reverse x then True else False
 -- Example:
 -- Example in Haskell:
 -- We have to define a new data type, because lists in Haskell are homogeneous.
-data NestedList a
-  = Elem a
-  | List [NestedList a]
+data NestedList a = Elem a | List [NestedList a]
 -- λ> problem7 (Elem 5)
 -- [5]
 -- λ> problem7 (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]])
@@ -95,7 +93,9 @@ data NestedList a
 -- []
 
 problem7 :: NestedList a -> [a]
-problem7 = undefined
+problem7 (Elem x) = [x]
+problem7 (List []) = []
+problem7 (List (xs:xss)) = problem7 xs ++ problem7 (List xss)
 
 
 -- Problem 8
@@ -106,7 +106,9 @@ problem7 = undefined
 -- λ> problem8 "aaaabccaadeeee"
 -- "abcade"
 problem8 :: Eq a => [a] -> [a]
-problem8 = undefined
+problem8 [] = []
+problem8 (x:[]) = [x]
+problem8 (x:taillist@(y:xs)) | x == y = problem8 taillist | otherwise = [x] ++ problem8 taillist
 
 
 -- Problem 9
@@ -116,7 +118,8 @@ problem8 = undefined
 -- λ> problem9 ['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']
 -- ["aaaa","b","cc","aa","d","eeee"]
 problem9 :: Eq a => [a] -> [[a]]
-problem9 = undefined
+problem9 [] = []
+problem9 (x:xs) = [[x]++(takeWhile (==x)xs)] ++ problem9 (dropWhile (==x)xs)
 
 
 -- Problem 10
@@ -128,7 +131,8 @@ problem9 = undefined
 -- λ> problem10 "aaaabccaadeeee"
 -- [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
 problem10 :: Eq a => [a] -> [(Int, a)]
-problem10 = undefined
+problem10 [] = []
+problem10 (x:xs) = [(length([x]++(takeWhile (==x)xs)), x)] ++ problem10 (dropWhile (==x)xs)
 
 
 -- Problem 11
