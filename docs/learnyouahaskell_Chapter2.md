@@ -1,5 +1,6 @@
 Source :  http://learnyouahaskell.com/types-and-typeclasses 
 
+```
 
 * :t followed by expression gives out type of the expression. Types are written in capital case.
 * addThree :: Int -> Int -> Int -> Int . addThree x y z = x+y+z
@@ -25,3 +26,4 @@ Source :  http://learnyouahaskell.com/types-and-typeclasses
 * Integral numeric typeclass for only integral numbers. Int and Integer belong here
 * Floating includes floating point numbers. Float, Double belong here.
 * fromIntegral :: (Num b, Integral a) => a -> b. Takes in an integral and convert it to a number
+```
