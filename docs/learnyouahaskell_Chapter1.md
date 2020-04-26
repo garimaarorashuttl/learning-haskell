@@ -1,6 +1,6 @@
 Source : http://learnyouahaskell.com/starting-out
 
-
+```
 * Purely functional programming language
 * Imperative languages : you give a series of instructions or a flow of control to execute and change state in between. In purely functional programming you don't tell the computer what to do as such but rather you tell it what stuff is.
 * Purely functional languages: function has no side-effect. It can't change something, it just calculates something and give out the result.
@@ -39,3 +39,4 @@ Source : http://learnyouahaskell.com/starting-out
 * snd takes a pair and returns its second element: snd(8,11) gives out 11 as output
 * zip: the longer list gets cut to match the length of  the shorter list
 * let rightTriangle = [(a,b,c | c<- [1..10], b<- [1..10]), a<-[1..10], a+b+c == 24, a^2+b^2 == c^2]
+```
