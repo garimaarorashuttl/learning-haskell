@@ -156,7 +156,11 @@ data ListItem a
 
 -- Modified run-length encoding.
 problem11 :: Eq a => [a] -> [ListItem a]
-problem11 = undefined
+problem11 [] = []
+problem11 (x:xs) | runLength == 1 = [Single x] ++ problem11 remainingList
+                 | runLength > 1 = [Multiple runLength x] ++ problem11 remainingList
+                 where runLength = length([x]++(takeWhile (==x)xs))
+                       remainingList = (dropWhile (==x)xs)
 
 
 -- Problem 12
@@ -169,7 +173,9 @@ problem11 = undefined
 -- λ> problem12 [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd']
 -- "aaaabccaad"
 problem12 :: Eq a => [ListItem a] -> [a]
-problem12 = undefined
+problem12 [] = []
+problem12 (Single x:xs) = [x] ++ problem12 xs
+problem12 (Multiple runLength x:xs) = take runLength (repeat x) ++ problem12 xs
 
 
 -- Problem 13
@@ -183,7 +189,11 @@ problem12 = undefined
 -- λ> problem13 "aaaabccaadeeee"
 -- [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd',Multiple 4 'e']
 problem13 :: Eq a => [a] -> [ListItem a]
-problem13 = undefined
+problem13 [] = []
+problem13 (x:xs) | runLength == 1 = [Single x] ++ problem11 remainingList
+                 | runLength > 1 = [Multiple runLength x] ++ problem13 remainingList
+                 where runLength = length([x]++(takeWhile (==x)xs))
+                       remainingList = (dropWhile (==x)xs)
 
 
 -- Problem 14
@@ -193,7 +203,8 @@ problem13 = undefined
 -- λ> problem14 [1, 2, 3]
 -- [1,1,2,2,3,3]
 problem14 :: [a] -> [a]
-problem14 = undefined
+problem14 [] = []
+problem14 x = [n| n<-x, _ <-[1..2]]
 
 
 -- Problem 15
@@ -203,7 +214,8 @@ problem14 = undefined
 -- λ> problem15 "abc" 3
 -- "aaabbbccc"
 problem15 :: [a] -> Int -> [a]
-problem15 = undefined
+problem15 [] num = []
+problem15 x num = [n| n<-x, _ <-[1..num]]
 
 
 -- Problem 16
@@ -213,7 +225,8 @@ problem15 = undefined
 -- λ> problem16 "abcdefghik" 3
 -- "abdeghk"
 problem16 :: [a] -> Int -> [a]
-problem16 = undefined
+problem16 [] num = []
+problem16 x num = (take (num-1) x) ++ problem16 (drop num x) num
 
 
 -- Problem 17
