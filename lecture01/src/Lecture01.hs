@@ -17,7 +17,7 @@ module Lecture01 where
 -- λ> problem1 ['x','y','z']
 -- 'z'
 problem1 :: [a] -> a
-problem1 x = last x
+problem1 x = x !! ((length x) - 1)
 
 
 -- Problem 2
@@ -27,7 +27,7 @@ problem1 x = last x
 -- λ> problem2 ['a'..'z']
 -- 'y'
 problem2 :: [a] -> a
-problem2 x = last (init x)
+problem2 x = x !! ((length x) - 2)
 
 
 -- Problem 3
@@ -60,7 +60,8 @@ problem4 x = length x
 -- λ> problem5 [1,2,3,4]
 -- [4,3,2,1]
 problem5 :: [a] -> [a]
-problem5 x = reverse x
+problem5 [] = []
+problem5 x = [last x] ++ problem5 (init x)
 
 
 -- Problem 6
@@ -237,7 +238,9 @@ problem16 x num = (take (num-1) x) ++ problem16 (drop num x) num
 -- λ> problem17 "abcdefghik" 3
 -- ("abc", "defghik")
 problem17 :: [a] -> Int -> ([a], [a])
-problem17 = undefined
+problem17 [] num = ([],[])
+problem17 arr num | num >= length arr =  (arr,[])
+                  | otherwise = ((take num arr), (drop num arr))
 
 
 -- Problem 18
@@ -250,7 +253,8 @@ problem17 = undefined
 -- λ> problem18 ['a','b','c','d','e','f','g','h','i','k'] 3 7
 -- "cdefg"
 problem18 :: [a] -> Int -> Int -> [a]
-problem18 = undefined
+problem18 [] start end = []
+problem18 arr start end = take (end - start + 1) (drop (start - 1) arr)
 
 
 -- Problem 19
@@ -263,8 +267,23 @@ problem18 = undefined
 -- "defghabc"
 -- λ> problem19 ['a','b','c','d','e','f','g','h'] (-2)
 -- "ghabcdef"
+rotateRight :: [a] -> Int -> [a]
+rotateRight [] n = []
+rotateRight arr n | n >= length arr = rotateRight arr (n - (length arr))
+                  | otherwise = (drop ((length arr) - n) arr) ++ (take ((length arr) - n) arr)
+
+rotateLeft :: [a] -> Int -> [a]
+rotateLeft [] n = []
+rotateLeft arr n | n >= length arr = rotateLeft arr (n - (length arr))
+                 | otherwise = (drop n arr) ++ (take n arr)
+
 problem19 :: [a] -> Int -> [a]
-problem19 = undefined
+problem19 [] n= []
+problem19 arr n | num >= length arr = problem19 arr (num - (length arr))
+                | otherwise = (drop num arr) ++ (take num arr)
+                where num | n < 0 = ((length arr) - (-n))
+                          | otherwise = n
+
 
 
 -- Problem 20
@@ -274,7 +293,7 @@ problem19 = undefined
 -- λ> problem20 2 "abcd"
 -- ('b',"acd")
 problem20 :: Int -> [a] -> (a, [a])
-problem20 = undefined
+problem20 k x = ((x !! (k-1)), ((take (k-1) x)  ++ (drop k x)))
 
 
 -- Problem A
@@ -284,15 +303,19 @@ problem20 = undefined
 -- λ> problemA [1,3,4] [2,5,6]
 -- [1,2,3,4,5,6]
 problemA :: Ord a => [a] -> [a] -> [a]
-problemA = undefined
-
+problemA x [] = x
+problemA [] x = x
+problemA x y | head x <= head y = [head x] ++ problemA (tail x) y
+             | otherwise = [head y] ++ problemA x (tail y)
 
 -- Problem B
 -- (*) Implement merge-sort
---     Given a list returna  sorted list using merge sort algorithm you can use the merge
+--     Given a list return a  sorted list using merge sort algorithm you can use the merge
 --     from previous problem
 -- Example:
 -- λ> problemB [4,3,2,1]
 -- [1,2,3,4]
 problemB :: Ord a => [a] -> [a]
-problemB = undefined
+problemB x | length x <=1 = x
+           | otherwise = problemA (problemB (take mid x)) (problemB (drop mid x))
+             where mid = round(fromIntegral(length x)/2)
