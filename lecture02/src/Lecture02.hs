@@ -167,7 +167,7 @@ allCodes runLength | runLength == 1 = [[x] | x<-colors]
 -- Always start by guessing [Red, Red, Red, ..., Red]. This will
 -- make it easier for us to test your outputs.
 solve :: Code -> [Move]
-solve = undefined 
+solve = undefined
 
 
 
@@ -176,9 +176,11 @@ solve = undefined
 
 -- Exercise 8: Do somthing to this type such that any equality comparision is
 -- always true.
--- Example: ADummy == BDummy -> True
 -- Example: ADummy == ADummy -> True
-data ScrewedUpType = ADummy | BDummy deriving (Show, Eq)
+-- Example: ADummy == ADummy -> True
+data ScrewedUpType = ADummy | BDummy deriving (Show)
+instance Eq ScrewedUpType where
+    _ == _ = True
 
 
 -- PART 3: Extra fun
@@ -186,6 +188,8 @@ data ScrewedUpType = ADummy | BDummy deriving (Show, Eq)
 -- Exercise 9: Implement nth fibonacci number
 -- This question has incremental difficulty levels. Take a look at the test case
 -- for more info
+fibSeries :: Integer -> Integer -> [Integer]
+fibSeries a b = a : (fibSeries b (a+b))
 
 fib :: Int -> Integer
-fib = undefined
+fib n = (take (n+1) $ fibSeries 0 1) !! n

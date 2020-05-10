@@ -91,7 +91,7 @@ moveList3 =
     , Move [Orange,Orange,Orange,Orange] 0 0
     , Move [Purple,Purple,Purple,Purple] 4 0
     ]
-    
+
 
 ex7Tests :: TestTree
 ex7Tests =
@@ -123,15 +123,15 @@ ex9Tests =
         , testCase "Fibonacci 3" $ assertEqual [] 610 (fib 15)
         -- Note: Uncomment the following if you have managed to get the
         -- runtime of your algo to O(n)
-        -- , testCase "Fibonacci 4" $ assertEqual [] 354224848179261915075 (fib 100)
-        -- , testCase "Fibonacci 5" $ assertEqual [] 1 (signum $ fib 1000)
+        , testCase "Fibonacci 4" $ assertEqual [] 354224848179261915075 (fib 100)
+        , testCase "Fibonacci 5" $ assertEqual [] 1 (signum $ fib 1000)
         -- Note: Uncomment the following if you have managed to get the runtime
         -- of your algo to O(log n).
         -- Hint: Num typeclass can be really helpful here to avoid a lot of
         -- complex algo work
         -- You should get an answer within 5 to 10 seconds
         -- Uncomment if you want to see how good your algo is
-        , testCase "Fibonacci 6" $ assertEqual [] 1 (signum $ fib 100000000)
+        -- , testCase "Fibonacci 6" $ assertEqual [] 1 (signum $ fib 100000000)
         ]
 
 -- All Tests ------------------------------------------
@@ -150,4 +150,3 @@ lecture02TestSuite =
     , ex8Tests
     , ex9Tests
     ]
-
