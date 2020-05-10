@@ -51,8 +51,8 @@ colors = [Red, Green, Blue, Yellow, Orange, Purple]
 -- Example: exactMatches [Red, Blue, Green, Yellow] [Blue, Green, Yellow, Red] == 0
 -- Example: exactMatches [Red, Blue, Green, Yellow] [Red, Purple, Green, Orange] == 2
 exactMatches :: Code -> Code -> Int
-exactMatches xs ys = undefined
- 
+exactMatches xs ys = length . filter (\(a,b)->a==b) $ zip xs ys
+
 
 -- Exercise 2 Now you will write a function that returns the number
 -- of total matches between the secret code and the guess. This is a little
@@ -78,14 +78,15 @@ exactMatches xs ys = undefined
 -- Example: countColors [Green, Blue, Green, Orange] == [0, 2, 1, 0, 1, 0]
 
 countColors :: Code -> [Int]
-countColors xs = undefined
+countColors xs = [length $ filter (==i) xs | i<-colors]
 
 -- Now you are ready to implement the main function: matches
 -- matches :: Code -> Code -> Int
 -- Example: matches [Red, Blue, Yellow, Orange] [Red, Orange, Orange, Blue] == 3
 --
+
 matches :: Code -> Code -> Int
-matches xs ys = undefined
+matches xs ys = sum . map (\(a,b)-> min a b).filter (\(a,b)-> b/=0 && a/=0) $ zip (countColors xs)  (countColors ys)
 
 
 -- Exercise 3 A Move is a new datatype that is constructed with a Code
@@ -102,7 +103,9 @@ data Move =
 -- the resulting Move.
 -- Example: getMove [Red, Blue, Yellow, Orange] [Red, Orange, Orange, Blue] == Move [Red, Orange, Orange, Blue] 1 2
 getMove :: Code -> Code -> Move
-getMove xs ys = undefined
+getMove xs ys = let exactMatchingCount = exactMatches xs ys
+                    minMatchCount = matches xs ys
+                in Move ys exactMatchingCount $ minMatchCount - exactMatchingCount
 
 -- Exercise 4 We will now define a concept that will be important
 -- in playing the Mastermind game. This is the concept of consistency;
@@ -115,7 +118,7 @@ getMove xs ys = undefined
 -- Example: isConsistent (Move [Red, Red, Blue, Green] 1 1) [Red, Blue, Yellow, Purple] == True
 -- Example: isConsistent (Move [Red, Red, Blue, Green] 1 1) [Red, Blue, Red, Purple] == False
 isConsistent :: Move -> Code -> Bool
-isConsistent = undefined
+isConsistent (Move moveCode exactMatch nonExactMatch) code = getMove code moveCode == Move moveCode exactMatch nonExactMatch
 
 -- Exercise 5 Now that we have the concept of consistency, we can
 -- filter a list of Codes to only contain those that are consistent with a
@@ -124,7 +127,7 @@ isConsistent = undefined
 -- on each new move until there is only one code left. Implement the
 -- function:
 filterCodes :: Move -> [Code] -> [Code]
-filterCodes = undefined
+filterCodes move inputCodes= filter (\code -> isConsistent move code) inputCodes
 
 
 -- Exercise 6 As mentioned in Exercise 5, the final algorithm will start
@@ -137,7 +140,9 @@ filterCodes = undefined
 -- take in a length2 and return all Codes of that length:
 -- allCodes :: Int -> [Code]
 allCodes :: Int -> [Code]
-allCodes = undefined
+allCodes runLength | runLength == 1 = [[x] | x<-colors]
+                   | runLength > 6 = undefined
+                   | otherwise = concat [map (\inputCode -> x:inputCode) $ allCodes $ runLength-1 | x <- colors]
 
 
 -- Exercise 7 We are now finally ready to write our Mastermind
@@ -162,7 +167,7 @@ allCodes = undefined
 -- Always start by guessing [Red, Red, Red, ..., Red]. This will
 -- make it easier for us to test your outputs.
 solve :: Code -> [Move]
-solve = undefined
+solve = undefined 
 
 
 
