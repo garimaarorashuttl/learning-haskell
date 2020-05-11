@@ -166,8 +166,18 @@ allCodes runLength | runLength == 1 = [[x] | x<-colors]
 -- out the secret.
 -- Always start by guessing [Red, Red, Red, ..., Red]. This will
 -- make it easier for us to test your outputs.
+
+solveHelper :: Code -> [Code] -> [Move] -> [Move]
+solveHelper secretCode possibleCodes  previousMoves | nextGuess==secretCode = updatedMoves
+                                                    | otherwise = solveHelper secretCode (filterCodes move possibleCodes) updatedMoves
+                                                      where nextGuess = possibleCodes!!0
+                                                            move = (getMove secretCode nextGuess)
+                                                            updatedMoves = previousMoves ++ [move]
+
+
 solve :: Code -> [Move]
-solve = undefined
+solve secretCode = solveHelper secretCode (allCodes 4) []
+
 
 
 
